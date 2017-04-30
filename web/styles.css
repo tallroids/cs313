@@ -1,0 +1,43 @@
+html{
+    font-family: sans-serif;
+    background-color: #123;
+}
+body{
+    background: #fff;
+    max-width: 500px;
+    padding: 20px;
+    margin: 0 auto;
+    box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+}
+
+h1, h2, h3{
+    color: #123;
+}
+
+img{
+    width: 100%;
+    margin: 10px 0;
+}
+#header{
+    margin: 20px 0;
+    background: #eee;
+    font-size: 1.5em;
+    padding: 10px;
+}
+
+#header ul{
+    margin: 0;
+    padding: 0;
+    color: #123;
+}
+
+#header a{
+    color: #123;
+    text-decoration: none;
+    transition: .3s;
+    padding: 10px;
+}
+
+#header a:hover{
+    background-color: #ccc;
+}
