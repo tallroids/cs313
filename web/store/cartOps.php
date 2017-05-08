@@ -14,7 +14,7 @@ include "index.php";
     die();
 } else if($action == "remove"){
     unset($_SESSION[$productName]);
-    $message = "successfully removed $productName from cart";
+    $message = "Successfully removed $productName from cart";
     include "cart.php";
     die();
 } else {
