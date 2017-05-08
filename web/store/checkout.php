@@ -13,6 +13,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
     <body>
         <main>
+            <h1>Checkout</h1>
         <form action="confirmation.php" method="post">
             <p class="checkout"> Full Name: </p>  
             <input class="checkout" type="text" name="name">
