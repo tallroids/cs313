@@ -1,0 +1,68 @@
+body{
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    font-size: 0;
+    font-family: sans-serif;
+    background-color: #ddd;
+    color: #123;
+    position: relative;
+}
+.message{
+    color: #125;
+    padding: 10px 0;
+}
+
+body *{
+    font-size: initial;
+}
+main{
+    padding: 20px;
+    background: #fff;
+    min-height: calc(100vh - 40px);
+}
+h1{
+    font-size: 32px;
+    margin: 0 0 10px 0;
+}
+h2{
+    font-size: 18px;
+    margin: 5px 0;
+}
+p.checkout{
+    display: inline-block;
+    margin: 0 0 10px;
+}
+.product{
+    border: solid 1px #aaa;
+    border-radius: 3px;
+    margin: 10px 0;
+    padding: 0 10px;
+}
+input.checkout{
+    position: absolute;
+    left: 150px;
+}
+input{
+    border: solid 1px #aaa;
+    border-radius: 3px;
+}
+.tile{
+    display: inline-block;
+    width: calc(50% - 30px);
+    margin: 0;
+    padding: 0 10px 10px 0;
+}
+button{
+    margin: 10px 0 ;
+    background-color: #ddd;
+    display: inline-block;
+}
+img{
+    display: block;
+    width: 100%;
+    margin: 0 0 5px;
+}
+input[type='number']{
+    width: 60px;
+}
