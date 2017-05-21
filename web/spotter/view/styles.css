@@ -1,0 +1,46 @@
+html {
+	background-color: #123;
+	font-family: sans-serif;
+}
+
+body {
+	max-width: 500px;
+	background: #fff;
+	margin: 0 auto;
+	padding: 10px 15px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, .3);
+}
+
+button {
+	padding: 10px;
+	border: solid #123 1px;
+	border-radius: 5px;
+	background: #fff;
+	transition: .3s;
+}
+
+button:hover {
+	background: #123;
+	color: #fff;
+	cursor: pointer;
+}
+
+label {
+	padding: 0 5px 5px 0;
+	vertical-align: top;
+}
+
+textarea {
+	display: block;
+	border-color: #ddd;
+}
+
+form div {
+	padding: 10px;
+}
+
+h1,
+h2,
+button {
+	color: #123;
+}
