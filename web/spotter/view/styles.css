@@ -19,7 +19,8 @@ button {
 	transition: .3s;
 }
 
-button:hover {
+button:hover,
+button.currPage {
 	background: #123;
 	color: #fff;
 	cursor: pointer;
