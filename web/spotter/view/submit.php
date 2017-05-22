@@ -24,6 +24,7 @@ session_start();
 			<div>
 				<label for="description">Description</label><textarea form="submit" name="description" id="description"></textarea>
 			</div>
+			<h3>Publish Publicly?</h3>
 			<div>
 				<label for="yes">Yes</label><input type="radio" name="ispublic" value="true" id="yes">
 			</div>

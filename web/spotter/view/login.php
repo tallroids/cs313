@@ -10,7 +10,6 @@ if(isset($message)){ echo "<h2>{$message}</h2>"; } ?>
 	<input type="text" name="username">
 	<p>Password</p>
 	<input type="password" name="password">
-
 	<button type="submit">Submit</button>
 </form>
 
