@@ -28,7 +28,7 @@ try
   
 	$getPublicLocations = $db->prepare('SELECT title, description, coordinates FROM locations WHERE isPublic = true;');
   
-	$getFavoriteLocations = $db->prepare('SELECT DISTINCT l.title, l.description, l.coordinates FROM favorites f JOIN locations l ON userId = :id;');
+	$getFavoriteLocations = $db->prepare('select distinct * from favorites join locations on locations.id = favorites.locationId where userId = :id;');
 	$getFavoriteLocations->bindParam(':id', $userId);
 	
 }
