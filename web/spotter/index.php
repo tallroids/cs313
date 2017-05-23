@@ -1,13 +1,14 @@
 <?php 
 session_start();
-include 'model/db.php';
+
+$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
 
 $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
 if(!isset($action)){
 	$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 }
 if(!isset($action)){
-	 if(!isset($_SESSION["user"])){
+	 if(!isset($_SESSION["username"])){
 		 $action = 'showLogin';
 	 } else {
 		 $action = 'showHome';
@@ -15,26 +16,43 @@ if(!isset($action)){
 }
 
 if ($action == 'login'){
+	include 'model/db.php';
 	$pass = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-  $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-	
-	if ($pass == "5678"){
-    $_SESSION['user'] = $username;
+	$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+	$getPass->execute();
+	$password2 = $getPass->fetch();
+	if($pass == $password2[0]){
+		$_SESSION['username'] = $username;
+		$getUserId->execute();
+		$userId = $getUserId->fetch();
+		$_SESSION['userId'] = $userId[0];
     $action = 'showHome';
-	} else {
+	} else{
 		$message = 'invalid login';
 		include 'view/login.php';
 		die();
 	}
 }
+
+$userId = $_SESSION['userId'];
+$username = $_SESSION['username'];
+include 'model/db.php';
+
+if($action == 'logout'){
+	session_destroy();
+	include 'view/login.php';
+	die();
+}
 if($action == 'showLogin'){
 	include 'view/login.php';
 	die();
 } else if($action == 'showHome'){
-	$locations = $getFavoriteLocations->fetchAll(PDO::FETCH_ASSOC);
+	$getFavoriteLocations->execute();
+	$locations = $getFavoriteLocations->fetchAll();
 	include 'view/home.php';
 } else if($action == 'showBrowse'){
-	$locations = $getPublicLocations->fetchAll(PDO::FETCH_ASSOC);
+	$getPublicLocations->execute();
+	$locations = $getPublicLocations->fetchAll();
 	include 'view/browse.php';
 } else if($action == 'showSubmit'){
 	include 'view/submit.php';

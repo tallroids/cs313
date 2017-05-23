@@ -1,6 +1,6 @@
 <?php
 session_start();
-    if(!isset($_SESSION['user'])){
+    if(!isset($_SESSION['username'])){
 			header("Location: ../index.php");
 			session_destroy();
 			die();
@@ -9,7 +9,6 @@ session_start();
 			include "modules/header.php";
 }
 
-//$db = require '../model/db.php';
 ?>
 	<main>
 		<h1>Spotter</h1>

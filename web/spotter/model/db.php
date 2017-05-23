@@ -19,10 +19,18 @@ $dbName = ltrim($dbopts["path"],'/');
 try
 {
 	$db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
-
-  $getPublicLocations = $db->query('SELECT title, description, coordinates FROM locations WHERE isPublic = true;');
-  $getFavoriteLocations = $db->query('SELECT title, description, coordinates FROM locations;');
-  $getUserId = $db->query('SELECT title, description, coordinates, ispublic FROM locations;');
+  
+  $getPass = $db->prepare('SELECT password FROM users WHERE username = :username;');
+	$getPass->bindParam(':username', $username);
+	
+	$getUserId = $db->prepare('SELECT id FROM users WHERE username = :username;');
+	$getUserId->bindParam(':username', $username);
+  
+	$getPublicLocations = $db->prepare('SELECT title, description, coordinates FROM locations WHERE isPublic = true;');
+  
+	$getFavoriteLocations = $db->prepare('SELECT DISTINCT l.title, l.description, l.coordinates FROM favorites f JOIN locations l ON userId = :id;');
+	$getFavoriteLocations->bindParam(':id', $userId);
+	
 }
 catch (PDOException $ex)
 {
