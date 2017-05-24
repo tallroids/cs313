@@ -26,11 +26,21 @@ try
 	$getUserId = $db->prepare('SELECT id FROM users WHERE username = :username;');
 	$getUserId->bindParam(':username', $username);
   
-	$getPublicLocations = $db->prepare('SELECT title, description, coordinates FROM locations WHERE isPublic = true;');
+	$getPublicLocations = $db->prepare('SELECT id, title, description FROM locations WHERE isPublic = true;');
   
 	$getFavoriteLocations = $db->prepare('select distinct * from favorites join locations on locations.id = favorites.locationId where userId = :id;');
 	$getFavoriteLocations->bindParam(':id', $userId);
 	
+	$addLocation = $db->prepare('INSERT INTO locations(title, description, lat, lon, isPublic) values (:title, :description, :lat, :lon, :isPublic);');
+	$addLocation->bindParam(':title', $title);
+	$addLocation->bindParam(':description', $description);
+	$addLocation->bindParam(':lat', $lat);
+	$addLocation->bindParam(':lon', $lon);
+	$addLocation->bindParam(':isPublic', $isPublic);
+	
+	$getLocationById = $db->prepare('SELECT * FROM locations WHERE id = :id;');
+	
+	$saveLocation = $db->prepare('INSERT INTO favorites (userId, locationId) values (:userId, :locationId);');
 }
 catch (PDOException $ex)
 {

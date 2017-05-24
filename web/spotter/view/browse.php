@@ -11,14 +11,16 @@ session_start();
 
 ?>
 	<main>
-		<h1>Spotter</h1>
 		<h2>Browse</h2>
-		<ul>
-			<?php
+		<form action="index.php" method="post">
+			<input type="hidden" action="index.php" method="post">
+			<ul>
+				<?php
 				foreach($locations as $location){
-				echo '<li><h3>'.$location['title'].'</h3> <p>'.$location['description'].'</p></li>';
+				echo '<li><h3><a href="index.php?action=viewLocation&id='.$location['id'].'&location='.urlencode($location['title']).'">'.($location['title']).'</a></h3> <p>'.$location['description'].'</p></li>';
 			}
 			?>
-		</ul>
+			</ul>
+		</form>
 	</main>
 	<?php include "modules/footer.php"; ?>

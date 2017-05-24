@@ -11,12 +11,11 @@ session_start();
 
 ?>
 	<main>
-		<h1>Spotter</h1>
 		<h2>Favorites</h2>
 		<ul>
 			<?php
 				foreach($locations as $location){
-				echo '<li><h3>'.$location['title'].'</h3> <p>'.$location['description'].'</p></li>';
+				echo '<li><h3><a href="index.php?action=viewLocation&id='.$location['id'].'&location='.urlencode($location['title']).'">'.($location['title']).'</a></h3> <p>'.$location['description'].'</p></li>';
 			}
 			?>
 		</ul>

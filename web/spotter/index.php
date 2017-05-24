@@ -50,12 +50,53 @@ if($action == 'showLogin'){
 	$getFavoriteLocations->execute();
 	$locations = $getFavoriteLocations->fetchAll();
 	include 'view/home.php';
+	die();
 } else if($action == 'showBrowse'){
 	$getPublicLocations->execute();
 	$locations = $getPublicLocations->fetchAll();
 	include 'view/browse.php';
+	die();
+} else if($action == 'viewLocation'){
+	$locationId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+	$getLocationById->bindParam(':id', $locationId);
+	$getLocationById->execute();
+	$location = $getLocationById->fetch();
+	include 'view/view.php';
+	die();
+} else if($action == 'saveLocation'){
+	$locationId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+	$userId = $_SESSION['userId'];
+	$saveLocation->bindParam(':locationId', $locationId);
+	$saveLocation->bindParam(':userId', $userId);
+	$saveLocation->execute();
+	$rowCount = $saveLocation->rowCount();
+	if($rowCount == 1){
+		$message = "Saved";
+	}
+	include 'view/view.php';
+	die();
 } else if($action == 'showSubmit'){
 	include 'view/submit.php';
+	die();
+} else if($action == 'submit'){
+	
+	$title = filter_input(INPUT_GET, 'name', FILTER_SANITIZE_STRING);
+	$description = filter_input(INPUT_GET, 'description', FILTER_SANITIZE_STRING);
+	$isPublic = filter_input(INPUT_GET, 'isPublic', FILTER_VALIDATE_BOOLEAN);
+	$lat = filter_input(INPUT_GET, 'lat', FILTER_VALIDATE_FLOAT);
+	$lon = filter_input(INPUT_GET, 'lng', FILTER_VALIDATE_FLOAT);
+	
+	include 'model/db.php';
+	$addLocation->execute();
+	
+	$rowsAffected = $addLocation->rowCount();
+	
+	if($rowsAffected == 1){
+		header("HTTP/10.2.1 200 OK");
+	} else {
+		header("HTTP/10.4.1 400 Bad Request");
+		die();
+	}
 } else {
 	include 'view/login.php';
 	session_destroy();

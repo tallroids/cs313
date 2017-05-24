@@ -4,14 +4,18 @@ html {
 }
 
 body {
-	max-width: 500px;
+	max-width: 600px;
 	background: #fff;
 	margin: 0 auto;
 	padding: 10px 15px;
 	box-shadow: 0 0 20px rgba(0, 0, 0, .3);
 }
 
-button {
+button,
+.button {
+	font-size: .8em;
+	text-decoration: none;
+	color: #123;
 	padding: 10px;
 	border: solid #123 1px;
 	border-radius: 5px;
@@ -20,7 +24,8 @@ button {
 }
 
 button:hover,
-button.currPage {
+button.currPage,
+.button:hover {
 	background: #123;
 	color: #fff;
 	cursor: pointer;
@@ -42,7 +47,29 @@ form div {
 
 h1,
 h2,
-h3,
-button {
+h3 {
 	color: #123;
+}
+
+textarea {
+	width: 100%;
+}
+
+#map {
+	width: 100%;
+	height: 300px;
+}
+
+.header {
+	display: flex;
+}
+
+.header h2 {
+	flex-grow: 1;
+	margin: 0;
+}
+
+.header .button {
+	margin-bottom: 15px;
+	height: initial;
 }
