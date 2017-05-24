@@ -47,13 +47,13 @@ session_start();
 				var messagewindow;
 
 				function initMap() {
-					var california = {
-						lat: 37.4419,
-						lng: -122.1419
+					var usa = {
+						lat: 40.834,
+						lng: -99.3603
 					};
 					map = new google.maps.Map(document.getElementById('map'), {
-						center: california,
-						zoom: 13
+						center: usa,
+						zoom: 4
 					});
 
 					infowindow = new google.maps.InfoWindow({
