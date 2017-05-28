@@ -97,7 +97,44 @@ if($action == 'showLogin'){
 		header("HTTP/10.4.1 400 Bad Request");
 		die();
 	}
-} else {
+}  else if($action == 'showRegister'){
+	include 'view/register.php';
+	die();
+} else if($action == 'register'){
+	$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+	$getUserId->execute();
+	$userId = $getUserId->fetch();
+	if($userId[0] != null){
+		$message = "An account with that username already exists";
+		include 'view/register.php';
+	} else {
+		$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+		$confPassword = filter_input(INPUT_POST, 'confPassword', FILTER_SANITIZE_STRING);
+		if($password != $confPassword){
+			$message = "Passwords do not match, please try again";
+			include 'view/register.php';
+			die();
+		} else {
+			$fname = filter_input(INPUT_POST, 'fname', FILTER_SANITIZE_STRING);
+			$lname = filter_input(INPUT_POST, 'lname', FILTER_SANITIZE_STRING);
+			$register->bindParam('fname', $fname);
+			$register->bindParam('lname', $lname);
+			$register->bindParam('username', $username);
+			$register->bindParam('password', $password);
+			$register->execute();
+			$success = $register->rowCount();
+			if($success = 1){
+				$message = 'Successfully created account, please log in';
+				include 'view/login.php';
+				die();
+			} else {
+				$message = 'An error occurred, please try again';
+				include 'view/register.php';
+			}
+		}
+	}
+	die();
+}else {
 	include 'view/login.php';
 	session_destroy();
 	die();

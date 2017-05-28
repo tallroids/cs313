@@ -41,6 +41,8 @@ try
 	$getLocationById = $db->prepare('SELECT * FROM locations WHERE id = :id;');
 	
 	$saveLocation = $db->prepare('INSERT INTO favorites (userId, locationId) values (:userId, :locationId);');
+	
+	$register = $db->prepare('INSERT INTO users (fname, lname, username, password) values (:fname, :lname, :username, :password);');
 }
 catch (PDOException $ex)
 {
