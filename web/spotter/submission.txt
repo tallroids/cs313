@@ -1,0 +1,27 @@
+After completing the assignment, please answer the questions in this text file and submit it to I-Learn.
+
+1. Copy and paste the URL for your web application:
+https://rocky-shelf-18707.herokuapp.com/spotter
+
+2. Copy and paste the URL for your source code repository (e.g., GitHub):
+https://github.com/tallroids/cs313/tree/master/web/spotter
+
+3. Briefly list and describe the elements of the application that are functioning. Include any special instructions about how to login and/or use your application.
+UPDATE: Registration form is now functional, so login credentials can be created by yourself. This queries the database to see if a user exists before creating it. 
+New locations can also be made. This uses Google's maps API to get coordinates from a dropped pin. The query is then sent to insert the row into the database.
+
+4. Briefly describe any pieces of the assignment that are not yet working correctly.
+Passwords will be hashed in the future
+
+5. Briefly describe the "coolest" thing you learned while completing this assignment.
+It is neat to see how flexible PDO statements are, and how they can be resued. 
+
+6. What is a benefit of having a foreign key constraint?
+It is nice to have that relationship to assist in form creation, so users don't have to type in everything.
+
+7. Please select the category you feel best describes your assignment:
+E - Shows creativity and excels above and beyond requirements
+
+
+8. Provide a brief justification (1-2 sentences) for selecting that category.
+I think that using the google maps api to create a location is pretty ingenuitive. It was fun to get working. 

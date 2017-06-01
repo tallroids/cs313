@@ -1,6 +1,5 @@
 <?php 
 session_start();
-
 $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
 
 $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
@@ -17,18 +16,19 @@ if(!isset($action)){
 
 if ($action == 'login'){
 	include 'model/db.php';
-	$pass = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+	$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 	$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
 	$getPass->execute();
 	$password2 = $getPass->fetch();
-	if($pass == $password2[0]){
+	if(password_verify($password, $password2[0])){
 		$_SESSION['username'] = $username;
 		$getUserId->execute();
 		$userId = $getUserId->fetch();
 		$_SESSION['userId'] = $userId[0];
+		$message = 'Welcome, '.$_SESSION["username"]."!";
     $action = 'showHome';
 	} else{
-		$message = 'invalid login';
+		$message = 'Invalid login';
 		include 'view/login.php';
 		die();
 	}
@@ -114,13 +114,19 @@ if($action == 'showLogin'){
 			$message = "Passwords do not match, please try again";
 			include 'view/register.php';
 			die();
-		} else {
+		} else if(preg_match('~[0-9]~', $password) === 0 || strlen($password) < 8){
+			$message = "Passwords does not meet requirements, please try again!";
+			include 'view/register.php';
+			die();
+		} 
+		else {
+			$hashword = password_hash($password, PASSWORD_DEFAULT);
 			$fname = filter_input(INPUT_POST, 'fname', FILTER_SANITIZE_STRING);
 			$lname = filter_input(INPUT_POST, 'lname', FILTER_SANITIZE_STRING);
 			$register->bindParam('fname', $fname);
 			$register->bindParam('lname', $lname);
 			$register->bindParam('username', $username);
-			$register->bindParam('password', $password);
+			$register->bindParam('password', $hashword);
 			$register->execute();
 			$success = $register->rowCount();
 			if($success = 1){

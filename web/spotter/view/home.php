@@ -11,6 +11,7 @@ session_start();
 
 ?>
 	<main>
+		<?php if(isset($message)){ echo "<h2>{$message}</h2>"; } ?>
 		<h2>Favorites</h2>
 		<ul>
 			<?php
