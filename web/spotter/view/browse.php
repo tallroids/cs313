@@ -1,12 +1,14 @@
 <?php
+if(!isset($_SESSION)){
 session_start();
-    if(!isset($_SESSION['username'])){
-			header("Location: ../index.php");
-			session_destroy();
-			die();
-    }else{
-			$thisPage = "browse"; 
-			include "modules/header.php";
+}
+if(!isset($_SESSION['username'])){
+    header("Location: ../");
+    session_destroy();
+    die();
+}else{
+    $thisPage = "browse"; 
+    include "modules/header.php";
 }
 
 ?>

@@ -1,7 +1,9 @@
 <?php
+if(!isset($_SESSION)){
 session_start();
+}
     if(!isset($_SESSION['username'])){
-			header("Location: ../index.php");
+			header("Location: ../");
 			session_destroy();
 			die();
     }else{
@@ -15,9 +17,16 @@ session_start();
 			<h2>
 				<?php echo $location['title']; ?>
 			</h2>
-			<a href="index.php?action=saveLocation&id=<?php echo $location['id'] ?>" class="button">Save</a>
+            <?php 
+                if($isSaved > 0){
+			         echo "<a onclick='removeLocation(".$location["id"].")' class='button'>Remove From Favorites</a>";
+                } else {
+			         echo "<a onclick='saveLocation(".$location["id"].")' class='button'>Save</a>";
+    
+                }
+            ?>
 		</div>
-		<?php if(isset($message)){ echo "<h2>{$message}</h2>"; } ?>
+		<h2 class='popup'><?php if(isset($message)){ echo $message; } ?></h2>
 		<div id="map"></div>
 		<script>
 			function initMap() {
@@ -37,7 +46,6 @@ session_start();
 
 		</script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5vzxhhGrSlKwQHbetNCtBuGeM2L5dloE&callback=initMap">
-
 
 		</script>
 		<p>

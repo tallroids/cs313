@@ -1,5 +1,8 @@
 <?php 
-session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
+    $thisPage = 'register';
 ?>
 <?php include "modules/header.php"; 
 if(isset($message)){ echo "<h2>{$message}</h2>"; } ?>

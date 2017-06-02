@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <html>
 
 <head>
@@ -13,7 +9,7 @@ session_start();
 
 <body>
 	<header>
-		<form action="index.php" method="POST">
+		<form action="./" method="POST">
 			<button type="submit" name="action" value="showHome" <?php if($thisPage=="home" ) { echo 'class="currPage"'; } ?>>Home</button>
 			<button type="submit" name="action" value="showBrowse" <?php if($thisPage=="browse" ) { echo 'class="currPage"'; } ?>>Browse Locations</button>
 			<button type="submit" name="action" value="showSubmit" <?php if($thisPage=="submit" ) { echo 'class="currPage"'; } ?>>Submit Location</button>

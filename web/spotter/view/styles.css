@@ -7,8 +7,9 @@ body {
 	max-width: 600px;
 	background: #fff;
 	margin: 0 auto;
-	padding: 10px 15px;
+	padding: 10px 25px;
 	box-shadow: 0 0 20px rgba(0, 0, 0, .3);
+    position: relative;
 }
 
 button,
@@ -23,12 +24,20 @@ button,
 	transition: .3s;
 }
 
+button:focus{
+    outline: none;
+}
+
 button:hover,
 button.currPage,
 .button:hover {
 	background: #123;
 	color: #fff;
 	cursor: pointer;
+}
+
+a {
+    color: #123;
 }
 
 label {
@@ -60,6 +69,21 @@ textarea {
 	height: 300px;
 }
 
+.popup{
+    opacity: 0;
+    position: fixed;
+    bottom: 0;
+    background: #123;
+    color: #fff;
+    padding: 5px 8px;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 5px 5px 0 0;
+    margin: 0;
+    transition: .3s;
+}
+
+/* Header Styles */
 .header {
 	display: flex;
 }
@@ -82,3 +106,113 @@ textarea {
 	background-color: #faa;
 	color: #200;
 }
+/* Login Page Styles */
+#login{
+    color: #fff;
+    background: #123;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 30px;
+    margin: 0 auto;
+    border: solid #123 1px;
+    border-radius: 15px;
+    margin-top: 20vh;
+}
+
+#logo{
+    color: #fff;
+    text-align: center;
+    font-size: 3em;
+    font-weight: 900;
+    margin: 0;
+    padding: 0;
+}
+
+
+#logo span:after{
+    content: "";
+    display: inline-block;
+    background: url(images/p.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 31px;
+    height: 50px;
+    margin: 25px 0 0 3px;
+    vertical-align: top;
+}
+
+input{
+    transition: .3s;
+    padding: 3px;
+    border-radius: 5px;
+    border: solid rgba(255, 255, 255, .2) 3px;
+}
+
+#login input{
+    display: block;
+    width: 100%;
+}
+#login p{
+    margin: 2px;
+}
+#login button{
+    margin: 10px 0;
+    display: block;
+    width: 100%;
+}
+#login button:hover{
+    box-shadow: 0 0 3px white;
+}
+input:focus{
+    border: solid rgba(23, 100, 255, .2) 3px;
+    outline: none;
+}
+
+#login a{
+    color: #DEF;
+}
+
+/* Home Page styles */
+ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.manage{
+    font-size: .6em;
+    position: absolute;
+    right: 25px;
+    vertical-align: bottom;
+    margin-top: 10px;
+}
+
+.checkBoxes {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 4px 0 0 10px;
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+    padding: 6.5px;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+    transition: .3s;
+  }
+  
+.checkBoxes:checked {
+    background-color: #123;
+    border: 1px solid #123;
+    color: #fff;
+  }
+  
+.checkBoxes:checked:after {
+    content: '\2714';
+    font-size: 14px;
+    position: absolute;
+    top: -3px;
+    left: 0.5px;
+    color: #fff;
+  }
