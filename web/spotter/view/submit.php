@@ -20,27 +20,39 @@ session_start();
 			<div id="map" height="460px" width="100%"></div>
 			<div id="form" style="display:none">
 				<table>
-					<tr>
-						<td>Name:</td>
-						<td><input type='text' id='name' /> </td>
-					</tr>
-					<tr>
-						<td>Description:</td>
-						<td><input type='text' id='description' /> </td>
-					</tr>
-					<tr>
-						<td>Publish Publicly?</td>
-						<td><select id='isPublic'> +
-                 <option value=true SELECTED>Yes</option>
-                 <option value=false>No</option>
-                 </select> </td>
-					</tr>
+                  <tr>
+                      <td>Name:</td>
+                      <td><input type='text' id='name' required/> </td>
+                  </tr>
+                  <tr>
+                      <td>Description:</td>
+                      <td><input type='text' id='description' required/> </td>
+                  </tr>
+                  <tr>
+                      <td>Publish Publicly?</td>
+                      <td><select id='isPublic'>
+                       <option value=true SELECTED>Yes</option>
+                       <option value=false>No</option>
+                       </select></td>
+                  </tr>
+                  <tr>
+                    <td>Category:</td>
+                    <td><select id="category">
+                      <?php
+                        foreach($categories as $category){
+                        echo "<option value='{$category['id']}'>{$category['title']}</option>";
+                      }
+                      ?>
+                    </select></td>
+                  </tr>
 					<tr>
 						<td></td>
 						<td><input type='button' value='Save' onclick='saveData()' /></td>
 					</tr>
 				</table>
 			</div>
+      <p>Step 1. Click a point on the map above to add a marker.</p>
+      <p>Step 2. Click the marker to add information and save the location.</p>
 			<div id="message" style="display:none">Location saved</div>
 			<script>
 				var map;
@@ -85,9 +97,10 @@ session_start();
 					var name = escape(document.getElementById('name').value);
 					var description = escape(document.getElementById('description').value);
 					var isPublic = document.getElementById('isPublic').value;
+                    var category = document.getElementById('category').value;
 					var latlng = marker.getPosition();
 					var url = 'index.php?action=submit&name=' + name + '&description=' + description +
-						'&isPublic=' + isPublic + '&lat=' + latlng.lat() + '&lng=' + latlng.lng();
+						'&isPublic=' + isPublic + '&lat=' + latlng.lat() + '&lng=' + latlng.lng() + '&category=' + category;
 
 					downloadUrl(url, function(data, responseCode) {
 

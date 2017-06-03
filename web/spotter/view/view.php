@@ -12,7 +12,7 @@ session_start();
 }
 
 ?>
-	<main>
+	<main id="view">
 		<div class="header">
 			<h2>
 				<?php echo $location['title']; ?>
@@ -24,10 +24,13 @@ session_start();
 			         echo "<a onclick='saveLocation(".$location["id"].")' class='button'>Save</a>";
     
                 }
+                if($location['authorid'] == $_SESSION['userId']){
+			       echo "<a href='./?action=showEditLocation&locationId={$location["id"]}' class='button'>Edit</a>";
+                }
             ?>
 		</div>
-		<h2 class='popup'><?php if(isset($message)){ echo $message; } ?></h2>
 		<div id="map"></div>
+        <h2 class='popup'><?php if(isset($message)){ echo $message; } ?></h2>
 		<script>
 			function initMap() {
 				var uluru = {
@@ -51,8 +54,5 @@ session_start();
 		<p>
 			<?php echo $location['description']; ?>
 		</p>
-		<form action="index.php" method="post">
-			<input type="hidden" name="action" value="">
-		</form>
 	</main>
 	<?php include "modules/footer.php"; ?>

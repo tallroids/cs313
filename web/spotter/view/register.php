@@ -4,50 +4,30 @@ if(!isset($_SESSION)){
 }
     $thisPage = 'register';
 ?>
-<?php include "modules/header.php"; 
-if(isset($message)){ echo "<h2>{$message}</h2>"; } ?>
-<script>
-	function checkPass(ele) {
-		var container = document.getElementById('passMsg');
-		var msg = "";
-		if (!/\d/.test(ele.value)) {
-			msg += "Password must contain a number<br>";
-		} else {
-			msg += "";
-		}
-		if (ele.value.length < 8) {
-			msg += "Password must be at least 8 characters long";
-		} else {
-			msg += "";
-		}
-		submit = document.getElementById('submit')
-		if (msg == "") {
-			submit.disabled = false;
-			document.querySelector('.error').setAttribute('style', 'display:none')
-		} else {
-			submit.disabled = true;
-			document.querySelector('.error').setAttribute('style', 'display:inline-block')
-		}
-		container.innerHTML = msg;
-	}
+<html>
 
-	function confPassword() {
-		var 1 = document.getElementById('password').value
-	}
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1">
+	<link type="text/css" rel="stylesheet" href="view/styles.css">
+	<script src="view/scripts.js"></script>
+</head>
 
-</script>
-<form action="index.php" method="POST">
+<body>
+  
+<form id="login" action="./" method="POST">
 	<input type="hidden" name="action" value="register">
 	<p>First Name</p>
-	<input type="text" name="fname">
+	<input type="text" name="fname" required>
 	<p>Last Name</p>
-	<input type="text" name="lname">
+	<input type="text" name="lname" required>
 	<p>Username</p>
-	<input type="text" name="username">
-	<p>Password (must contain at least 8 characters and a number)</p>
-	<input type="password" name="password" onchange="checkPass(this)" id="password"><span id="passMsg" class="error"></span>
+	<input type="text" name="username" required>
+	<p>Password (Include 8 characters and a number)</p>
+	<input type="password" name="password" onchange="checkPass(this)" id="password" required>
 	<p>Confirm Password</p>
-	<input type="password" name="confPassword" onchange="checkMatch" id="confPass">
+	<input type="password" name="confPassword" onchange="checkMatch()" id="confPass" required>
+    <p id='passMsg' class='error'><?php if(isset($message)){ echo $message; } ?></p>
 	<button type="submit" id="submit">Submit</button>
 </form>
 
