@@ -14,7 +14,9 @@ CREATE TABLE locations (
 	description text,
     lat         Numeric(10,6),
     lon         Numeric(10,6),
-	isPublic    bool
+	isPublic    bool,
+    authorId    int references users(id),
+    categoryId  int references categories(id)
 );
 
 CREATE TABLE categories (

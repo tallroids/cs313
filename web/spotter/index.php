@@ -8,7 +8,7 @@ if(!isset($action)){
 	$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 }
 if(!isset($action)){
-	 if(!isset($_SESSION["username"])){
+	 if(!isset($_SESSION["userId"])){
 		 $action = 'showLogin';
 	 } else {
 		 $action = 'showHome';
@@ -80,90 +80,138 @@ if($action == 'showLogin'){
 	}
 	die();
 } else {
-    $userId = $_SESSION['userId'];
-    $username = $_SESSION['username'];
-    include 'model/db.php';
+  $userId = $_SESSION['userId'];
+  $username = $_SESSION['username'];
+  include 'model/db.php';
 }
 if($action == 'logout'){
-	session_destroy();
-	include 'view/login.php';
-	die();
+  session_destroy();
+  include 'view/login.php';
+  die();
 } else if($action == 'showHome'){
-    $userId = $_SESSION['userId'];
-    $getFavoriteLocations->bindParam(':id', $userId);
-	$getFavoriteLocations->execute();
-	$locations = $getFavoriteLocations->fetchAll();
-	include 'view/home.php';
-	die();
+  $getFavoriteLocations->bindParam(':id', $userId);
+  $getFavoriteLocations->execute();
+  $locations = $getFavoriteLocations->fetchAll();
+  $getYourLocations->bindParam(':userId', $userId);
+  $getYourLocations->execute();
+  $yourLocations = $getYourLocations->fetchAll();
+  include 'view/home.php';
+  die();
 } else if($action == 'showBrowse'){
-	$getPublicLocations->execute();
-	$locations = $getPublicLocations->fetchAll();
-	include 'view/browse.php';
-	die();
+  $getCategories->execute();
+  $categories = $getCategories->fetchAll();
+  $getPublicLocations->execute();
+  $locations = $getPublicLocations->fetchAll();
+  include 'view/browse.php';
+  die();
 } else if($action == 'viewLocation'){
-	$locationId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-    $getLocationById->bindParam(':id', $locationId);
-	$getLocationById->execute();
-	$location = $getLocationById->fetch();
-    $checkIsSaved->bindParam(':locationId', $locationId);
-    $checkIsSaved->bindParam(':userId', $_SESSION['userId']);
-    $checkIsSaved->execute();
-    $isSaved = $checkIsSaved->fetch()[0];
-	include 'view/view.php';
-	die();
+  $locationId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+  $message = urldecode(filter_input(INPUT_GET, 'message', FILTER_SANITIZE_STRING));
+  $getLocationById->bindParam(':id', $locationId);
+  $getLocationById->execute();
+  $location = $getLocationById->fetch();
+  $checkIsSaved->bindParam(':locationId', $locationId);
+  $checkIsSaved->bindParam(':userId', $_SESSION['userId']);
+  $checkIsSaved->execute();
+  $isSaved = $checkIsSaved->fetch()[0];
+  include 'view/view.php';
+  die();
 } else if($action == 'saveLocation'){
-	$locationId = filter_input(INPUT_GET, 'locationId', FILTER_VALIDATE_INT);
-	$userId = $_SESSION['userId'];
-	$saveLocation->bindParam(':locationId', $locationId);
-	$saveLocation->bindParam(':userId', $userId);
-	$saveLocation->execute();
-	$rowCount = $saveLocation->rowCount();
-	if($rowCount == 1){
-		header("HTTP/10.2.1 200 OK");
-	} else {
-        header("HTTP/10.4.1 400 Bad Request");
-		die();
-    }
+  $locationId = filter_input(INPUT_GET, 'locationId', FILTER_VALIDATE_INT);
+  $userId = $_SESSION['userId'];
+  $saveLocation->bindParam(':locationId', $locationId);
+  $saveLocation->bindParam(':userId', $userId);
+  $saveLocation->execute();
+  $rowCount = $saveLocation->rowCount();
+  if($rowCount == 1){
+      header("HTTP/10.2.1 200 OK");
+  } else {
+      header("HTTP/10.4.1 400 Bad Request");
+      die();
+  }
 } else if($action == 'removeLocation'){
-	$locationId = filter_input(INPUT_GET, 'locationId', FILTER_VALIDATE_INT);
-	$userId = $_SESSION['userId'];
-	$removeLocation->bindParam(':locationId', $locationId);
-	$removeLocation->bindParam(':userId', $userId);
-	$removeLocation->execute();
-	$rowCount = $removeLocation->rowCount();
-	if($rowCount > 0){
-		header("HTTP/10.2.1 200 OK");
-	} else {
-        header("HTTP/10.4.1 400 Bad Request");
-		die();
-    }
+  $locationId = filter_input(INPUT_GET, 'locationId', FILTER_VALIDATE_INT);
+  $userId = $_SESSION['userId'];
+  $removeLocation->bindParam(':locationId', $locationId);
+  $removeLocation->bindParam(':userId', $userId);
+  $removeLocation->execute();
+  $rowCount = $removeLocation->rowCount();
+  if($rowCount > 0){
+      header("HTTP/10.2.1 200 OK");
+  } else {
+      header("HTTP/10.4.1 400 Bad Request");
+      die();
+  }
 } else if($action == 'showSubmit'){
+  $getCategories->execute();
+  $categories = $getCategories->fetchAll();
 	include 'view/submit.php';
 	die();
+} else if($action == 'showEditLocation'){
+  $getCategories->execute();
+  $categories = $getCategories->fetchAll();
+  $locationId = filter_input(INPUT_GET, 'locationId', FILTER_VALIDATE_INT);
+  $getAuthor->bindParam(':locationId', $locationId);
+  $getAuthor->execute();
+  $authorId = $getAuthor->fetch()[0];
+  $getLocationById->bindParam(':id', $locationId);
+  $getLocationById->execute();
+  $location = $getLocationById->fetch();
+  if($authorId == $_SESSION['userId']){
+    include 'view/editLocation.php';
+  } else {
+    echo $authorId. " ,". $_SESSION['userId'];
+    echo "Nice try bozo";
+  }
+} else if($action == 'updateLocation'){
+  $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
+  $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
+  $isPublic = filter_input(INPUT_POST, 'isPublic', FILTER_VALIDATE_BOOLEAN);
+  $categoryId = filter_input(INPUT_POST, 'categoryId', FILTER_VALIDATE_INT);
+  $locationId = filter_input(INPUT_POST, 'locationId', FILTER_VALIDATE_INT);
+  $updateLocation->bindParam(':locationId', $locationId);
+  $updateLocation->bindParam(':title', $title);
+  $updateLocation->bindParam(':description', $description);
+  $updateLocation->bindParam(':isPublic', $isPublic);
+  $updateLocation->bindParam(':categoryId', $categoryId);
+  $updateLocation->execute();
+  $rowsAffected = $updateLocation->rowCount();
+  if($rowsAffected == 1){
+    $message = "Updated location!";
+  } else {
+    $message = "Error updating location";
+  }
+    header("Location: ./?action=viewLocation&id=".$locationId."&location=".urlencode($location['title'])."&message=".urlencode($message));
+    die();
 } else if($action == 'submit'){
-	
-	$title = filter_input(INPUT_GET, 'name', FILTER_SANITIZE_STRING);
-	$description = filter_input(INPUT_GET, 'description', FILTER_SANITIZE_STRING);
-	$isPublic = filter_input(INPUT_GET, 'isPublic', FILTER_VALIDATE_BOOLEAN);
-	$lat = filter_input(INPUT_GET, 'lat', FILTER_VALIDATE_FLOAT);
-	$lon = filter_input(INPUT_GET, 'lng', FILTER_VALIDATE_FLOAT);
-	
-	include 'model/db.php';
-	$addLocation->execute();
-	
-	$rowsAffected = $addLocation->rowCount();
-	
-	if($rowsAffected == 1){
-		header("HTTP/10.2.1 200 OK");
-	} else {
-		header("HTTP/10.4.1 400 Bad Request");
-		die();
-	}
-    
+  $title = filter_input(INPUT_GET, 'name', FILTER_SANITIZE_STRING);
+  $description = filter_input(INPUT_GET, 'description', FILTER_SANITIZE_STRING);
+  $isPublic = filter_input(INPUT_GET, 'isPublic', FILTER_VALIDATE_BOOLEAN);
+  $lat = filter_input(INPUT_GET, 'lat', FILTER_VALIDATE_FLOAT);
+  $lon = filter_input(INPUT_GET, 'lng', FILTER_VALIDATE_FLOAT);
+  $categoryId = filter_input(INPUT_GET, 'category', FILTER_VALIDATE_INT);
+
+  $addLocation->bindParam(':title', $title);
+  $addLocation->bindParam(':description', $description);
+  $addLocation->bindParam(':lat', $lat);
+  $addLocation->bindParam(':lon', $lon);
+  $addLocation->bindParam(':authorId', $userId);
+  $addLocation->bindParam(':categoryId', $categoryId);
+  $addLocation->bindParam(':isPublic', $isPublic);
+  $addLocation->execute();
+  $rowsAffected = $addLocation->rowCount();
+
+  if($rowsAffected == 1){
+      header("HTTP/10.2.1 200 OK");
+  } else {
+      header("HTTP/10.4.1 400 Bad Request");
+      die();
+  }
+
 } else {
-	include 'view/login.php';
-	session_destroy();
-	die();
+  include 'view/login.php';
+  session_destroy();
+  die();
 }
 
 ?>
