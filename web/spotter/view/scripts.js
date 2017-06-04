@@ -101,7 +101,7 @@ function filterByCategory(catId) {
 }
 
 window.onload=function(){
-  if(document.querySelector('main').id == 'view' && document.querySelector('.popup').innerText != ""){
+  if(document.querySelector('.popup').innerText != ""){
     console.log("called")
     var message = document.querySelector('.popup');
     message.style = "opacity: 1;";

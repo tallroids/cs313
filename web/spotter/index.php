@@ -89,6 +89,7 @@ if($action == 'logout'){
   include 'view/login.php';
   die();
 } else if($action == 'showHome'){
+  $message = filter_input(INPUT_GET, 'message', FILTER_SANITIZE_STRING);
   $getFavoriteLocations->bindParam(':id', $userId);
   $getFavoriteLocations->execute();
   $locations = $getFavoriteLocations->fetchAll();
@@ -129,6 +130,17 @@ if($action == 'logout'){
       header("HTTP/10.4.1 400 Bad Request");
       die();
   }
+} else if($action == 'deleteLocation'){
+  $locationId = filter_input(INPUT_GET, 'locationId', FILTER_VALIDATE_INT);
+  $deleteLocation->bindParam('locationId', $locationId);
+  $deleteLocation->execute();
+  $rowCount = $deleteLocation->rowCount();
+  if($rowCount == 1){
+    $message = "Removed location";
+  } else {
+    $message = "Location not removed";
+  }
+  header("Location: ./?action=showHome&message=".urlencode($message));
 } else if($action == 'removeLocation'){
   $locationId = filter_input(INPUT_GET, 'locationId', FILTER_VALIDATE_INT);
   $userId = $_SESSION['userId'];

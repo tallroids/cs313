@@ -11,12 +11,12 @@ CREATE TABLE users (
 CREATE TABLE locations (
 	id          serial unique primary key,
 	title       varchar(100) not null,
-	description text,
-    lat         Numeric(10,6),
-    lon         Numeric(10,6),
-	isPublic    bool,
-    authorId    int references users(id),
-    categoryId  int references categories(id)
+	description text not null,
+    lat         Numeric(10,6) not null,
+    lon         Numeric(10,6) not null,
+	isPublic    bool not null,
+    authorId    int references users(id) not null,
+    categoryId  int references categories(id) not null
 );
 
 CREATE TABLE categories (

@@ -17,6 +17,7 @@ session_start();
 			<h2>
 				<?php echo $location['title']; ?>
 			</h2>
+            <a href="./?action=deleteLocation&locationId=<?php echo $location["id"]; ?>" class='button'>Delete</a>
 		</div>
 		<h2 class='popup'><?php if(isset($message)){ echo $message; } ?></h2>
 		<div id="map"></div>
