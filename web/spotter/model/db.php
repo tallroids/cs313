@@ -32,7 +32,7 @@ try
   
   $getCategories = $db->prepare('SELECT * FROM categories');
   
-  $addLocation = $db->prepare('INSERT INTO locations(title, description, lat, lon, authorId, categoryId, isPublic) VALUES (:title, :description, :lat, :lon, :author, :category, :isPublic);');
+  $addLocation = $db->prepare('INSERT INTO locations(title, description, lat, lon, authorId, categoryId, isPublic) VALUES (:title, :description, :lat, :lon, :authorId, :categoryId, :isPublic);');
   
   $deleteLocation = $db->prepare('DELETE FROM locations WHERE id = :locationId;');
 
